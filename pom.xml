@@ -16,8 +16,16 @@
 
     <organization>
         <!-- Used as the 'Vendor' for JNLP generation -->
-        <name>Your Organisation</name>
+        <name>BMEC - Berner Modelleisenbahn Club</name>
     </organization>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>4.1.0.RELEASE</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>
@@ -104,5 +112,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

@@ -2,21 +2,28 @@ package ch.bmec.bmecscreen;
 
 import javafx.application.Application;
 import static javafx.application.Application.launch;
-import javafx.fxml.FXMLLoader;
+import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Scene.fxml"));
-        
+
+        Platform.setImplicitExit(true);
+
+        AnnotationConfigApplicationContext context
+                = new AnnotationConfigApplicationContext(SampleAppFactory.class);
+        SpringFxmlLoader loader = new SpringFxmlLoader(context);
+
+        Parent root = (Parent) loader.load("/fxml/Scene.fxml");
+
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");
-        
+
         stage.setTitle("JavaFX and Maven");
         stage.setScene(scene);
         stage.show();
