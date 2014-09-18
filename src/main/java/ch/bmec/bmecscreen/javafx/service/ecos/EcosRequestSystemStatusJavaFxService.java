@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ch.bmec.bmecscreen.javafx.service;
+package ch.bmec.bmecscreen.javafx.service.ecos;
 
 import ch.bmec.bmecscreen.service.EcosCommunicationService;
+import ch.bmec.bmecscreen.service.EcosSystemStatus;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,18 +17,18 @@ import org.springframework.stereotype.Component;
  * @author Thom
  */
 @Component
-public class EcosJavaFxService extends Service<Boolean> {
+public class EcosRequestSystemStatusJavaFxService extends Service<EcosSystemStatus> {
 
     @Autowired
     private EcosCommunicationService ecosService;
 
     @Override
-    protected Task<Boolean> createTask() {
-        return new Task<Boolean>() {
+    protected Task<EcosSystemStatus> createTask() {
+        return new Task<EcosSystemStatus>() {
 
             @Override
-            protected Boolean call() throws Exception {
-                return ecosService.checkConnection();
+            protected EcosSystemStatus call() throws Exception {
+                return ecosService.requestSystemStatus();
             }
         };
     }

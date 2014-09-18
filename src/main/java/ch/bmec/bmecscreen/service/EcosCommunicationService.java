@@ -12,4 +12,10 @@ package ch.bmec.bmecscreen.service;
 public interface EcosCommunicationService {
 
     public boolean checkConnection();
+    
+    public boolean turnSystemOn();
+    
+    public boolean turnSystemOff();
+    
+    public EcosSystemStatus requestSystemStatus();
 }
