@@ -1,5 +1,7 @@
 package ch.bmec.bmecscreen;
 
+import ch.bmec.bmecscreen.javafx.SpringFxmlLoader;
+import ch.bmec.bmecscreen.config.SpringConfiguration;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.application.Platform;
@@ -8,7 +10,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-public class MainApp extends Application {
+public class BmecScreenApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -16,7 +18,7 @@ public class MainApp extends Application {
         Platform.setImplicitExit(true);
 
         AnnotationConfigApplicationContext context
-                = new AnnotationConfigApplicationContext(SampleAppFactory.class);
+                = new AnnotationConfigApplicationContext(SpringConfiguration.class);
         SpringFxmlLoader loader = new SpringFxmlLoader(context);
 
         Parent root = (Parent) loader.load("/fxml/Scene.fxml");

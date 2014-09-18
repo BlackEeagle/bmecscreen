@@ -1,0 +1,8 @@
+---
+ecosConfig: 
+    ip: 192.168.0.105
+    tcpPort: 15471
+    timeout: 1000
+    protocol: DCC
+    address: 189
+...

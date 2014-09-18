@@ -5,6 +5,7 @@
  */
 package ch.bmec.bmecscreen.service;
 
+import ch.bmec.bmecscreen.config.EcosConfig;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -15,6 +16,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -22,16 +24,12 @@ import org.springframework.stereotype.Component;
  * @author Thom
  */
 @Component
-public class EcosCommunicationServiceSocket implements EcosCommunicationService {
+public class SocketEcosCommunicationService implements EcosCommunicationService {
 
-    private final Logger log = LoggerFactory.getLogger(EcosCommunicationServiceSocket.class);
-
-    private static final int SOCKET_TIMEOUT = 2000;
-    private static final int TCP_PORT = 15471;
-    private static final String IP_ADDRESS = "192.168.0.105";
-
-    private static final String PROTOCOL = "DCC";
-    private static final String ADDRESS = "189";
+    private final Logger log = LoggerFactory.getLogger(SocketEcosCommunicationService.class);
+    
+    @Autowired
+    private ConfigurationService configService;
 
     @Override
     public boolean checkConnection() {
@@ -149,7 +147,7 @@ public class EcosCommunicationServiceSocket implements EcosCommunicationService 
     }
 
     private void connect(final Socket socket) throws IOException {
-        socket.connect(new InetSocketAddress(IP_ADDRESS, TCP_PORT), SOCKET_TIMEOUT);
+        socket.connect(new InetSocketAddress(getEcosConfig().getIp(), getEcosConfig().getTcpPort()), getEcosConfig().getTimeout());
     }
 
     private String buildMessageToSend(String command, String port) {
@@ -158,8 +156,8 @@ public class EcosCommunicationServiceSocket implements EcosCommunicationService 
         // set(11, switch[DCC189g])
         message.append(command);
         message.append("(11, switch[");
-        message.append(PROTOCOL);
-        message.append(ADDRESS);
+        message.append(getEcosConfig().getProtocol());
+        message.append(getEcosConfig().getAddress());
         message.append(port);
         message.append("])");
 
@@ -173,11 +171,15 @@ public class EcosCommunicationServiceSocket implements EcosCommunicationService 
         message.append("<REPLY ");
         message.append(command);
         message.append("(11, switch[");
-        message.append(PROTOCOL);
-        message.append(ADDRESS);
+        message.append(getEcosConfig().getProtocol());
+        message.append(getEcosConfig().getAddress());
         message.append(port);
         message.append("])>");
 
         return message.toString();
+    }
+    
+    private EcosConfig getEcosConfig() {
+        return configService.getConfig().getEcosConfig();
     }
 }

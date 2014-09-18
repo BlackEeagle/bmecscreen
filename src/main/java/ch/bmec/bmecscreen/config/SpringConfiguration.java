@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ch.bmec.bmecscreen;
+package ch.bmec.bmecscreen.config;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +14,6 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ComponentScan(basePackages = {"ch.bmec.bmecscreen", "ch.bmec.bmecscreen.service"})
-public class SampleAppFactory {
+public class SpringConfiguration {
 
 }
