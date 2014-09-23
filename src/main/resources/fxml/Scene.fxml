@@ -8,11 +8,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="200" prefWidth="320" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.bmec.bmecscreen.javafx.controller.FxmlController">
+<AnchorPane id="AnchorPane" prefHeight="512.0" prefWidth="462.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.bmec.bmecscreen.javafx.controller.FxmlController">
     <children>
-        <Label layoutX="17.0" layoutY="21.0" minHeight="16" minWidth="69" text="ecos connection" />
-      <Circle fx:id="ecosStatus" layoutX="134.0" layoutY="30.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" visible="false" />
-      <Button layoutX="14.0" layoutY="88.0" mnemonicParsing="false" onAction="#handleRefreshButtonAction" text="refresh connection" />
-      <ToggleButton fx:id="systemToggleButton" disable="true" layoutX="14.0" layoutY="123.0" mnemonicParsing="false" onAction="#handleToggleSystem" text="System ein" />
+        <fx:include source="/fxml/EcosPane.fxml" />
+        <!--<fx:include source="/fxml/EcosPane.fxml" />-->
+        <fx:include source="/fxml/RPiPane.fxml" />
+        <!--<fx:include source="/fxml/RPiPane.fxml" />-->
     </children>
 </AnchorPane>

@@ -5,7 +5,7 @@
  */
 package ch.bmec.bmecscreen.javafx.service.ecos;
 
-import ch.bmec.bmecscreen.service.EcosCommunicationService;
+import ch.bmec.bmecscreen.service.ecos.EcosCommunicationService;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import org.springframework.beans.factory.annotation.Autowired;

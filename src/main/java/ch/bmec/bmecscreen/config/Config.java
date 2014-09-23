@@ -13,6 +13,8 @@ public class Config {
 
     private EcosConfig ecosConfig;
 
+    private RPiConfig rPiConfig;
+
     public Config() {
 
     }
@@ -25,8 +27,16 @@ public class Config {
         this.ecosConfig = ecosConfig;
     }
 
+    public RPiConfig getrPiConfig() {
+        return rPiConfig;
+    }
+
+    public void setrPiConfig(RPiConfig rPiConfig) {
+        this.rPiConfig = rPiConfig;
+    }
+
     @Override
     public String toString() {
-        return "Config{" + "ecosConfig=" + ecosConfig + '}';
+        return "Config{" + "ecosConfig=" + ecosConfig + ", rPiConfig=" + rPiConfig + '}';
     }
 }

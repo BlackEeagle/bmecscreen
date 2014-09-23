@@ -3,12 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ch.bmec.bmecscreen.service;
+package ch.bmec.bmecscreen.service.configuration;
+
+import ch.bmec.bmecscreen.config.Config;
 
 /**
  *
  * @author Thom
  */
-public enum EcosSystemStatus {
-    ON, OFF;
+public interface ConfigurationAware {
+    
+    public Config getConfig();
+    
 }

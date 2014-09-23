@@ -20,7 +20,7 @@ public class BmecScreenApp extends Application {
         AnnotationConfigApplicationContext context
                 = new AnnotationConfigApplicationContext(SpringConfiguration.class);
         SpringFxmlLoader loader = new SpringFxmlLoader(context);
-
+        
         Parent root = (Parent) loader.load("/fxml/Scene.fxml");
 
         Scene scene = new Scene(root);
