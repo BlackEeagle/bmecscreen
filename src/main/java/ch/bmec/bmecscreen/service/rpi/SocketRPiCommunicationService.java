@@ -12,15 +12,17 @@ import ch.bmec.bmecscreen.service.socket.SocketManager;
 import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Thom
  */
+@Component
 public class SocketRPiCommunicationService extends AbstractSocketCommunicationService implements RPiCommunicationService {
 
     private final Logger log = LoggerFactory.getLogger(SocketEcosCommunicationService.class);
-    
+
     @Override
     protected SocketManager createSocketManager() {
         return new SocketManager(getRPiConfig().getIp(), getRPiConfig().getTcpPort(), getRPiConfig().getTimeout());
@@ -28,51 +30,57 @@ public class SocketRPiCommunicationService extends AbstractSocketCommunicationSe
 
     @Override
     public boolean checkConnection() {
-        
+
         boolean isConnected = false;
 
         try {
             if (socketManager.isConnected() == false) {
                 socketManager.connect();
             }
-                
+
             isConnected = socketManager.isConnected();
         } catch (IOException ex) {
-            log.error(ex.getMessage());
+            log.error(ex.getMessage(), ex);
         }
 
         return isConnected;
-        
+
     }
 
     @Override
     public boolean isAlive() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        return sendAndReceive("BMECScreen1-alive-", "BMECScreen2-hello-");
     }
 
     @Override
     public boolean activateVncDisplay() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        return sendAndReceive("BMECScreen1-status-on-", "BMECScreen2-status-ok-");
     }
 
     @Override
     public boolean deactivateVncDisplay() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        return sendAndReceive("BMECScreen1-status-off-", "BMECScreen2-status-ok-");
     }
 
     @Override
     public boolean rebootVncViewer() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        return sendAndReceive("BMECScreen1-vncrestart-", "BMECScreen2-vncrestart-ok-");
     }
 
     @Override
     public boolean shutdown() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        return sendAndReceive("BMECScreen1-shutdown-", "BMECScreen2-shutdown-ok-");
     }
 
     @Override
     public boolean reboot() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        return sendAndReceive("BMECScreen1-reboot-", "BMECScreen2-reboot-ok-");
     }
 
     @Override
@@ -92,5 +100,25 @@ public class SocketRPiCommunicationService extends AbstractSocketCommunicationSe
 
     private RPiConfig getRPiConfig() {
         return getConfig().getrPiConfig();
+    }
+
+    private boolean sendAndReceive(String messageToSend, String expectedAnswer) {
+
+        boolean success = false;
+
+        if (messageToSend != null && expectedAnswer != null) {
+            try {
+                socketManager.writeAndFlush(messageToSend);
+
+                String answer = socketManager.read(128);
+
+                success = expectedAnswer.equals(answer);
+
+            } catch (IOException ex) {
+                log.error(ex.getMessage(), ex);
+            }
+        }
+
+        return success;
     }
 }

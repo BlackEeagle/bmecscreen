@@ -7,13 +7,18 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 
-<TitledPane animated="false" collapsible="false" layoutX="236.0" layoutY="20.0" prefHeight="479.0" prefWidth="202.0" text="RPi" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="ch.bmec.bmecscreen.javafx.controller.RPiPaneController">
+<TitledPane animated="false" collapsible="false" layoutX="236.0" layoutY="20.0" prefHeight="479.0" prefWidth="202.0" text="RPi" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.bmec.bmecscreen.javafx.controller.RPiPaneController">
     <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
             <children>
                 <Label layoutX="14.0" layoutY="14.0" text="RPi alive" />
-                <Button fx:id="rPiRefreshButton" layoutX="14.0" layoutY="44.0" mnemonicParsing="false" onAction="#handleRefreshRPiAliveButton" text="refresh connection" />
+                <Button fx:id="rPiRefreshButton" layoutX="14.0" layoutY="44.0" mnemonicParsing="false" onAction="#handleRefreshRPiAliveButton" text="refresh is alive" />
                 <Circle fx:id="rPiStatus" layoutX="109.0" layoutY="23.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" visible="false" />
+            <Button fx:id="activateVncButton" layoutX="14.0" layoutY="86.0" mnemonicParsing="false" onAction="#handleActivateVncButton" text="activate vnc" />
+            <Button fx:id="deactivateVncButton" layoutX="14.0" layoutY="124.0" mnemonicParsing="false" onAction="#handleDeactivateVncButton" text="deactivate vnc" />
+            <Button fx:id="rebootVncButton" layoutX="14.0" layoutY="161.0" mnemonicParsing="false" onAction="#handleRebootVncButton" text="reboot vnc" />
+            <Button fx:id="shutdownRPiButton" layoutX="14.0" layoutY="202.0" mnemonicParsing="false" onAction="#handleShutdownRPiButton" text="shutdown RPi" />
+            <Button fx:id="rebootRPiButton" layoutX="14.0" layoutY="239.0" mnemonicParsing="false" onAction="#handleRebootRPiButton" text="reboot RPi" />
             </children>
         </AnchorPane>
     </content>

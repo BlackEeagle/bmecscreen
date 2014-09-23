@@ -12,15 +12,16 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 public class BmecScreenApp extends Application {
 
+    private AnnotationConfigApplicationContext context;
+
     @Override
     public void start(Stage stage) throws Exception {
 
         Platform.setImplicitExit(true);
 
-        AnnotationConfigApplicationContext context
-                = new AnnotationConfigApplicationContext(SpringConfiguration.class);
+        context = new AnnotationConfigApplicationContext(SpringConfiguration.class);
         SpringFxmlLoader loader = new SpringFxmlLoader(context);
-        
+
         Parent root = (Parent) loader.load("/fxml/Scene.fxml");
 
         Scene scene = new Scene(root);
@@ -29,6 +30,11 @@ public class BmecScreenApp extends Application {
         stage.setTitle("JavaFX and Maven");
         stage.setScene(scene);
         stage.show();
+    }
+
+    @Override
+    public void stop() throws Exception {
+        context.close();
     }
 
     /**

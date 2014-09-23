@@ -8,9 +8,7 @@ package ch.bmec.bmecscreen.service.ecos;
 import ch.bmec.bmecscreen.config.EcosConfig;
 import ch.bmec.bmecscreen.service.socket.AbstractSocketCommunicationService;
 import ch.bmec.bmecscreen.service.socket.SocketManager;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.slf4j.Logger;
@@ -22,7 +20,7 @@ import org.springframework.stereotype.Component;
  * @author Thom
  */
 @Component
-public class SocketEcosCommunicationService extends AbstractSocketCommunicationService implements EcosCommunicationService{
+public class SocketEcosCommunicationService extends AbstractSocketCommunicationService implements EcosCommunicationService {
 
     private final Logger log = LoggerFactory.getLogger(SocketEcosCommunicationService.class);
 
@@ -40,7 +38,7 @@ public class SocketEcosCommunicationService extends AbstractSocketCommunicationS
             if (socketManager.isConnected() == false) {
                 socketManager.connect();
             }
-                
+
             isConnected = socketManager.isConnected();
         } catch (IOException ex) {
             log.error(ex.getMessage());
@@ -68,29 +66,21 @@ public class SocketEcosCommunicationService extends AbstractSocketCommunicationS
         String command = "get";
 
         try {
-            PrintWriter writer = socketManager.getWriter();
-            BufferedReader reader = socketManager.getReader();
 
             String messageToSend = buildMessageToSend(command, port);
-            log.trace(messageToSend);
-
-            writer.print(messageToSend);
-            writer.flush();
+            socketManager.writeAndFlush(messageToSend);
 
             Pattern catchAnswerPattern = Pattern.compile("11 switch\\[(\\d)\\]");
 
             // read three lines
-            String line = reader.readLine();
-            log.trace(line);
+            String line = socketManager.readLine();
             boolean firstLineCorrect = buildFirstReplyLine(command, port).equals(line);
 
-            line = reader.readLine();
-            log.trace(line);
+            line = socketManager.readLine();
             Matcher answerMatcher = catchAnswerPattern.matcher(line);
             boolean secondLineCorrect = answerMatcher.matches();
 
-            line = reader.readLine();
-            log.trace(line);
+            line = socketManager.readLine();
             boolean thirdLineCorrect = "<END 0 (OK)>".equals(line);
 
             if (firstLineCorrect && secondLineCorrect && thirdLineCorrect) {
@@ -117,18 +107,12 @@ public class SocketEcosCommunicationService extends AbstractSocketCommunicationS
         String command = "set";
 
         try {
-            PrintWriter writer = socketManager.getWriter();
-            BufferedReader reader = socketManager.getReader();
-
             String messageToSend = buildMessageToSend(command, port);
-            log.trace(messageToSend);
-
-            writer.print(messageToSend);
-            writer.flush();
+            socketManager.writeAndFlush(messageToSend);
 
             for (int lines = 0; lines < 2; lines++) {
                 // we're not interesed in the contetn, just receive two lines;
-                log.trace(reader.readLine());
+                socketManager.readLine();
             }
 
             success = true;

@@ -46,8 +46,10 @@ public class SocketManager {
     }
 
     public void disconnect() {
+        
         try {
-            if (socket.isConnected()) {
+            if (socket != null && socket.isConnected()) {
+                log.trace("close connection: " + socket.toString());
                 socket.close();
             }
         } catch (IOException ioe) {
@@ -55,7 +57,7 @@ public class SocketManager {
         }
     }
 
-    public BufferedReader getReader() throws IOException {
+    private BufferedReader getReader() throws IOException {
 
         if (socket.isConnected() == false) {
             connect();
@@ -68,7 +70,7 @@ public class SocketManager {
         return reader;
     }
 
-    public PrintWriter getWriter() throws IOException {
+    private PrintWriter getWriter() throws IOException {
 
         if (socket.isConnected() == false) {
             connect();
@@ -84,5 +86,35 @@ public class SocketManager {
     public boolean isConnected() {
 
         return socket.isConnected();
+    }
+    
+    public String readLine() throws IOException {
+        String line = getReader().readLine();
+        log.trace(line);
+        
+        return line;
+    }
+    
+    public String read(int buffSize) throws IOException {
+        char[] buffer = new char[buffSize];
+        getReader().read(buffer);
+        
+        String content = new String(buffer).trim();
+        log.trace(content);
+        
+        return content;
+    }
+    
+    public void write(String message) throws IOException {
+        
+        log.trace(message);
+        getWriter().write(message);
+    }
+    
+    public void writeAndFlush(String message) throws IOException {
+        
+        log.trace(message);
+        getWriter().write(message);
+        getWriter().flush();
     }
 }

@@ -86,10 +86,11 @@ public class EcosPaneController implements Initializable {
         ecosCheckConnectionService.setOnSucceeded((WorkerStateEvent event) -> {
             boolean connected = (Boolean) event.getSource().getValue();
 
+            ecosRefreshButton.setDisable(false);
+            
             if (connected) {
                 ecosStatus.setFill(Color.GREEN);
                 systemToggleButton.setDisable(false);
-                ecosRefreshButton.setDisable(false);
             } else {
                 ecosStatus.setFill(Color.RED);
             }

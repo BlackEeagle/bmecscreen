@@ -8,7 +8,6 @@ package ch.bmec.bmecscreen.service.socket;
 import ch.bmec.bmecscreen.config.Config;
 import ch.bmec.bmecscreen.service.configuration.ConfigurationAware;
 import ch.bmec.bmecscreen.service.configuration.ConfigurationService;
-import ch.bmec.bmecscreen.service.socket.SocketManager;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import org.springframework.beans.factory.annotation.Autowired;
