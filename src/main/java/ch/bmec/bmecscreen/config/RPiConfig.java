@@ -11,8 +11,21 @@ package ch.bmec.bmecscreen.config;
  */
 public class RPiConfig extends TcpConfig {
 
+    private int serverPort;
+
+    public RPiConfig() {
+    }
+
+    public int getServerPort() {
+        return serverPort;
+    }
+
+    public void setServerPort(int serverPort) {
+        this.serverPort = serverPort;
+    }
+
     @Override
     public String toString() {
-        return "RPiConfig{:" + super.toString() + '}';
+        return "RPiConfig{:" + super.toString() + "serverPort=" + serverPort + "}";
     }
 }

@@ -27,6 +27,7 @@ public class RPiActivateVncJavaFxService extends Service<Boolean> {
 
             @Override
             protected Boolean call() throws Exception {
+                rPiCommunicationService.startPushPushedThread();
                 return rPiCommunicationService.activateVncDisplay();
             }
         };

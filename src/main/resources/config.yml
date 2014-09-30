@@ -9,4 +9,5 @@ rPiConfig:
     ip: 10.10.10.247
     tcpPort: 9999
     timeout: 1000
+    serverPort: 9998
 ...

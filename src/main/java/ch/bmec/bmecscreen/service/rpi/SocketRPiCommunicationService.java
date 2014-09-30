@@ -5,13 +5,17 @@
  */
 package ch.bmec.bmecscreen.service.rpi;
 
+import ch.bmec.bmecscreen.service.rpi.server.RPiPushButtonServerThread;
 import ch.bmec.bmecscreen.config.RPiConfig;
-import ch.bmec.bmecscreen.service.ecos.SocketEcosCommunicationService;
 import ch.bmec.bmecscreen.service.socket.AbstractSocketCommunicationService;
 import ch.bmec.bmecscreen.service.socket.SocketManager;
 import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import javax.annotation.PreDestroy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -21,7 +25,20 @@ import org.springframework.stereotype.Component;
 @Component
 public class SocketRPiCommunicationService extends AbstractSocketCommunicationService implements RPiCommunicationService {
 
-    private final Logger log = LoggerFactory.getLogger(SocketEcosCommunicationService.class);
+    private final Logger log = LoggerFactory.getLogger(SocketRPiCommunicationService.class);
+
+    private ExecutorService executorService;
+
+    @Autowired
+    private RPiPushButtonServerThread serverThread;
+
+    @PreDestroy
+    public void cleanup() {
+        if (executorService != null) {
+            executorService.shutdownNow();
+            serverThread.shutdownServerAndClients();
+        }
+    }
 
     @Override
     protected SocketManager createSocketManager() {
@@ -61,25 +78,25 @@ public class SocketRPiCommunicationService extends AbstractSocketCommunicationSe
 
     @Override
     public boolean deactivateVncDisplay() {
-        
+
         return sendAndReceive("BMECScreen1-status-off-", "BMECScreen2-status-ok-");
     }
 
     @Override
     public boolean rebootVncViewer() {
-        
+
         return sendAndReceive("BMECScreen1-vncrestart-", "BMECScreen2-vncrestart-ok-");
     }
 
     @Override
     public boolean shutdown() {
-        
+
         return sendAndReceive("BMECScreen1-shutdown-", "BMECScreen2-shutdown-ok-");
     }
 
     @Override
     public boolean reboot() {
-        
+
         return sendAndReceive("BMECScreen1-reboot-", "BMECScreen2-reboot-ok-");
     }
 
@@ -95,7 +112,10 @@ public class SocketRPiCommunicationService extends AbstractSocketCommunicationSe
 
     @Override
     public void startPushPushedThread() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        executorService = Executors.newSingleThreadExecutor();
+
+        executorService.submit(serverThread);
     }
 
     private RPiConfig getRPiConfig() {
