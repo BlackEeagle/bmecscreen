@@ -5,6 +5,8 @@
  */
 package ch.bmec.bmecscreen.service.rpi;
 
+import ch.bmec.bmecscreen.service.rpi.pushbutton.PushbuttonConfiguration;
+
 /**
  *
  * @author Thom
@@ -29,6 +31,6 @@ public interface RPiCommunicationService {
     
     public boolean configureTv(TvCommand command);
     
-    public void startPushPushedThread();
+    public void startPushbuttonServerThread();
     
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ch.bmec.bmecscreen.service.rpi;
+package ch.bmec.bmecscreen.service.rpi.pushbutton;
 
 /**
  *
@@ -28,6 +28,10 @@ public class PushbuttonConfiguration {
     }
 
     public PushbuttonConfiguration(boolean screen1, boolean screen2, boolean up, boolean down, boolean left, boolean right) {
+        setConfiguration(screen1, screen2, up, down, left, right);
+    }
+
+    public void setConfiguration(boolean screen1, boolean screen2, boolean up, boolean down, boolean left, boolean right) {
         this.screen1 = screen1;
         this.screen2 = screen2;
         this.up = up;
@@ -82,6 +86,11 @@ public class PushbuttonConfiguration {
 
     public void setRight(boolean right) {
         this.right = right;
+    }
+
+    @Override
+    public String toString() {
+        return "PushbuttonConfiguration{" + "screen1=" + screen1 + ", screen2=" + screen2 + ", up=" + up + ", down=" + down + ", left=" + left + ", right=" + right + '}';
     }
 
 }

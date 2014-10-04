@@ -12,7 +12,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -113,7 +112,7 @@ public class SocketManager {
 
     public String readLine() throws IOException {
         String line = getReader().readLine();
-        log.trace(line);
+        log.trace("--> " + line);
 
         return line;
     }
@@ -123,7 +122,7 @@ public class SocketManager {
         getReader().read(buffer);
 
         String content = new String(buffer).trim();
-        log.trace(content);
+        log.trace("--> " + content);
 
         if ("".equals(content)) {
             throw new RemoteSocketClosedConnectionException("remote socket closed connection");
@@ -134,13 +133,13 @@ public class SocketManager {
 
     public void write(String message) throws IOException {
 
-        log.trace(message);
+        log.trace("<-- " + message);
         getWriter().write(message);
     }
 
     public void writeAndFlush(String message) throws IOException {
 
-        log.trace(message);
+        log.trace("<-- " + message);
         getWriter().write(message);
         getWriter().flush();
     }

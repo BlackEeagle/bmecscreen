@@ -5,8 +5,9 @@
  */
 package ch.bmec.bmecscreen.service.rpi;
 
-import ch.bmec.bmecscreen.service.rpi.server.RPiPushButtonServerThread;
+import ch.bmec.bmecscreen.service.rpi.pushbutton.PushbuttonConfiguration;
 import ch.bmec.bmecscreen.config.RPiConfig;
+import ch.bmec.bmecscreen.service.rpi.server.RPiPushButtonServerThread;
 import ch.bmec.bmecscreen.service.socket.AbstractSocketCommunicationService;
 import ch.bmec.bmecscreen.service.socket.SocketManager;
 import java.io.IOException;
@@ -28,6 +29,8 @@ public class SocketRPiCommunicationService extends AbstractSocketCommunicationSe
     private final Logger log = LoggerFactory.getLogger(SocketRPiCommunicationService.class);
 
     private ExecutorService executorService;
+
+    private boolean serverThreadStarted;
 
     @Autowired
     private RPiPushButtonServerThread serverThread;
@@ -111,11 +114,14 @@ public class SocketRPiCommunicationService extends AbstractSocketCommunicationSe
     }
 
     @Override
-    public void startPushPushedThread() {
+    public void startPushbuttonServerThread() {
 
-        executorService = Executors.newSingleThreadExecutor();
+        if (serverThreadStarted == false) {
+            executorService = Executors.newSingleThreadExecutor();
 
-        executorService.submit(serverThread);
+            executorService.submit(serverThread);
+            serverThreadStarted = true;
+        }
     }
 
     private RPiConfig getRPiConfig() {

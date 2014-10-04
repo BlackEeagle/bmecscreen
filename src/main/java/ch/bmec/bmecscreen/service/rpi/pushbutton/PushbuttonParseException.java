@@ -3,12 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ch.bmec.bmecscreen.service.rpi.server;
+package ch.bmec.bmecscreen.service.rpi.pushbutton;
 
 /**
  *
  * @author Thom
  */
-public interface RPiPushButtonClientConnection extends Runnable {
-    
+public class PushbuttonParseException extends Exception {
+
+    public PushbuttonParseException(String message) {
+        super(message);
+    }
 }

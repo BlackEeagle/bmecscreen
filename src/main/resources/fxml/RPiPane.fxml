@@ -19,6 +19,7 @@
             <Button fx:id="rebootVncButton" layoutX="14.0" layoutY="161.0" mnemonicParsing="false" onAction="#handleRebootVncButton" text="reboot vnc" />
             <Button fx:id="shutdownRPiButton" layoutX="14.0" layoutY="202.0" mnemonicParsing="false" onAction="#handleShutdownRPiButton" text="shutdown RPi" />
             <Button fx:id="rebootRPiButton" layoutX="14.0" layoutY="239.0" mnemonicParsing="false" onAction="#handleRebootRPiButton" text="reboot RPi" />
+            <Label fx:id="outputLabel" layoutX="14.0" layoutY="296.0" prefHeight="17.0" prefWidth="122.0" />
             </children>
         </AnchorPane>
     </content>

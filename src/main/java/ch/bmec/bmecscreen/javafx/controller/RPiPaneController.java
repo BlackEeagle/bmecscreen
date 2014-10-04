@@ -14,11 +14,13 @@ import ch.bmec.bmecscreen.javafx.service.rpi.RPiRebootVncJavaFxService;
 import ch.bmec.bmecscreen.javafx.service.rpi.RPiShutdownJavaFxService;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +32,7 @@ import org.springframework.stereotype.Component;
  * @author Thom
  */
 @Component
-public class RPiPaneController implements Initializable {
+public class RPiPaneController implements Initializable, RPiUiOutput {
 
     @Autowired
     private JavaFxServiceHelper serviceHelper;
@@ -73,6 +75,9 @@ public class RPiPaneController implements Initializable {
 
     @FXML
     private Button rebootRPiButton;
+
+    @FXML
+    private Label outputLabel;
 
     @FXML
     public void handleRefreshRPiAliveButton(ActionEvent event) {
@@ -131,6 +136,18 @@ public class RPiPaneController implements Initializable {
         });
 
         checkConnection();
+    }
+
+    @Override
+    public void displayOutput(String output) {
+
+        if (Platform.isFxApplicationThread() == false) {
+            Platform.runLater(() -> {
+                outputLabel.setText(output);
+            });
+        } else {
+            outputLabel.setText(output);
+        }
     }
 
     private void checkConnection() {

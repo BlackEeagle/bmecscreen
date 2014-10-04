@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ch.bmec.bmecscreen.service.rpi.server;
+package ch.bmec.bmecscreen.javafx.controller;
 
 /**
  *
  * @author Thom
  */
-public interface RPiPushButtonClientConnection extends Runnable {
+public interface RPiUiOutput {
+    
+    public void displayOutput(String output);
     
 }

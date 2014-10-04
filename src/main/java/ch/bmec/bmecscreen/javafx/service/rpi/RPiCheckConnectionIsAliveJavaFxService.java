@@ -27,7 +27,13 @@ public class RPiCheckConnectionIsAliveJavaFxService extends Service<Boolean> {
 
             @Override
             protected Boolean call() throws Exception {
-                return rPiCommunicationService.checkConnection() && rPiCommunicationService.isAlive();
+                Boolean isAlive =  rPiCommunicationService.checkConnection() && rPiCommunicationService.isAlive();
+                
+                if(isAlive) {
+                    rPiCommunicationService.startPushbuttonServerThread();
+                }
+                
+                return isAlive;
             }
         };
     }
