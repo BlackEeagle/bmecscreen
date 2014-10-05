@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ch.bmec.bmecscreen.javafx.service;
+package ch.bmec.bmecscreen.ui.javafx.service;
 
 import javafx.concurrent.Service;
 import javafx.concurrent.Worker;

@@ -1,6 +1,6 @@
 package ch.bmec.bmecscreen;
 
-import ch.bmec.bmecscreen.javafx.SpringFxmlLoader;
+import ch.bmec.bmecscreen.ui.javafx.SpringFxmlLoader;
 import ch.bmec.bmecscreen.config.SpringConfiguration;
 import javafx.application.Application;
 import static javafx.application.Application.launch;

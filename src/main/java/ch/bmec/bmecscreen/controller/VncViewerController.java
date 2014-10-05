@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ch.bmec.bmecscreen.service.vnc;
+package ch.bmec.bmecscreen.controller;
 
 import ch.bmec.bmecscreen.service.rpi.pushbutton.PushbuttonConfiguration;
 

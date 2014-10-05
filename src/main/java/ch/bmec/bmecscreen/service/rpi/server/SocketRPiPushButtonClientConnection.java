@@ -5,12 +5,11 @@
  */
 package ch.bmec.bmecscreen.service.rpi.server;
 
-import ch.bmec.bmecscreen.javafx.controller.RPiUiOutput;
 import ch.bmec.bmecscreen.service.rpi.RPiCommunicationService;
 import ch.bmec.bmecscreen.service.rpi.pushbutton.PushbuttonConfiguration;
 import ch.bmec.bmecscreen.service.rpi.pushbutton.PushbuttonConfigurationService;
 import ch.bmec.bmecscreen.service.socket.SocketManager;
-import ch.bmec.bmecscreen.service.vnc.VncViewerController;
+import ch.bmec.bmecscreen.controller.VncViewerController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +29,6 @@ public class SocketRPiPushButtonClientConnection implements RPiPushButtonClientC
     private final SocketManager socketManager;
 
     private final RPiPushButtonServerThread server;
-
-    @Autowired
-    private RPiUiOutput rPiUiOutput;
 
     @Autowired
     private PushbuttonConfigurationService pushbuttonConfigurationService;
@@ -64,8 +60,6 @@ public class SocketRPiPushButtonClientConnection implements RPiPushButtonClientC
                 String response = buildResponse(successfullyParsed);
 
                 socketManager.writeAndFlush(response);
-
-                rPiUiOutput.displayOutput(message);
 
                 if (successfullyParsed) {
                     pushbuttonConfiguration = vncViewerController.handlePush(pushbuttonConfiguration);

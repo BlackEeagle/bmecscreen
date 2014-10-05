@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ch.bmec.bmecscreen.javafx;
+package ch.bmec.bmecscreen.ui.javafx;
 
 import java.io.IOException;
 import java.io.InputStream;

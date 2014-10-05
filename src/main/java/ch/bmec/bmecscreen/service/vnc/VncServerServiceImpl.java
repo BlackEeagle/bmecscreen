@@ -33,7 +33,7 @@ public class VncServerServiceImpl implements VncServerService {
     public void startVncServer() {
 
         if (isVncServerRunning == false) {
-            executeCommands("tvnserver.exe", "-run");
+            executeCommands(getConfig().getPath() + "tvnserver.exe", "-run");
             isVncServerRunning = true;
         }
     }
@@ -42,7 +42,7 @@ public class VncServerServiceImpl implements VncServerService {
     public void shutdownVncServer() {
 
         if (isVncServerRunning == true) {
-            executeCommands("tvnserver.exe", "-controlapp", "-shutdown");
+            executeCommands(getConfig().getPath() + "tvnserver.exe", "-controlapp", "-shutdown");
             isVncServerRunning = false;
         }
     }
@@ -58,13 +58,13 @@ public class VncServerServiceImpl implements VncServerService {
             resAndTopLeft.append(getConfig().getViewerResolution().getHeight());
             resAndTopLeft.append("+").append(top).append("+").append(left);
 
-            executeCommands("tvnserver.exe", "-controlapp", "sharerect", resAndTopLeft.toString());
+            executeCommands(getConfig().getPath() + "tvnserver.exe", "-controlapp", "sharerect", resAndTopLeft.toString());
         }
     }
 
     private void executeCommands(String... commands) {
         ProcessBuilder processBuilder = new ProcessBuilder(commands);
-        processBuilder.directory(new File(getConfig().getPath()));
+        //processBuilder.directory(new File(getConfig().getPath()));
 
         try {
             log.trace("execute " + Arrays.asList(commands).toString() + " in " + getConfig().getPath());

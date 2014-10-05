@@ -7,6 +7,7 @@ package ch.bmec.bmecscreen.service.rpi.server;
 
 import ch.bmec.bmecscreen.service.configuration.ConfigurationService;
 import ch.bmec.bmecscreen.service.socket.SocketManager;
+import ch.bmec.bmecscreen.ui.SystemUiController;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -44,6 +45,9 @@ public class SocketRPiPushButtonServerThread implements RPiPushButtonServerThrea
 
     @Autowired
     private ConfigurationService configurationService;
+    
+    @Autowired
+    private SystemUiController uiController;
 
     @PostConstruct
     public void startup() {
@@ -63,12 +67,15 @@ public class SocketRPiPushButtonServerThread implements RPiPushButtonServerThrea
             int port = configurationService.getConfig().getrPiConfig().getServerPort();
 
             serverSocket = new ServerSocket(port);
+            
+            uiController.setPushbuttonServerStatus(true, serverSocket.getInetAddress().getHostAddress(), port);
 
             while (serverSocket.isClosed() == false) {
 
                 log.trace("wait for connection...");
                 Socket clientSocket = serverSocket.accept();
                 clientSockets.add(clientSocket);
+                uiController.setPushbuttonServerClientCount(clientSockets.size());
                 log.trace("connection from " + clientSocket);
 
                 SocketManager socketManager = new SocketManager(clientSocket);
@@ -107,10 +114,14 @@ public class SocketRPiPushButtonServerThread implements RPiPushButtonServerThrea
         } catch (IOException ex) {
             // nothing
         }
+        
+        uiController.setPushbuttonServerStatus(false, "", 0);
     }
 
     @Override
     public void unregisterClient(Socket clientSocket) {
         clientSockets.remove(clientSocket);
+        
+        uiController.setPushbuttonServerClientCount(clientSockets.size());
     }
 }
