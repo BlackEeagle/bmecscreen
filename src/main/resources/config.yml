@@ -1,0 +1,24 @@
+---
+ecosConfig: 
+    ip: 10.10.10.249
+    tcpPort: 15471
+    timeout: 1000
+    protocol: DCC
+    address: 189
+rPiConfig:
+    ip: 10.10.10.247
+    tcpPort: 9999
+    timeout: 1000
+    serverPort: 9998
+vncConfig:
+    path: C:\Program Files\TightVNC
+    viewerResolution:
+        width: 1920
+        height: 1080
+    serverResolution:
+        width: 2100
+        height: 1200
+    initTop: 50
+    initLeft: 240
+    stepSize: 50
+...
