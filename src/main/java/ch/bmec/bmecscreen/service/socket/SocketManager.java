@@ -37,6 +37,8 @@ public class SocketManager {
 
     private boolean alreadyConnected;
 
+    private boolean isConnected;
+    
     public SocketManager(String ipAddress, int port, int timeout) {
         this.ipAddress = ipAddress;
         this.port = port;
@@ -54,20 +56,27 @@ public class SocketManager {
     public void connect() throws IOException {
 
         if (alreadyConnected) {
-            socket.close();
+            if (socket.isClosed() == false) {
+                socket.close();
+            }
+            
             socket = new Socket();
         }
 
         alreadyConnected = true;
+        isConnected = true;
         socket.connect(new InetSocketAddress(ipAddress, port), timeout);
     }
 
     public void disconnect() {
 
         try {
-            if (socket != null && socket.isConnected()) {
+            if (socket != null && socket.isConnected() && socket.isClosed() == false) {
                 log.trace("close connection: " + socket.toString());
                 socket.close();
+                isConnected = false;
+                writer = null;
+                reader = null;
             }
         } catch (IOException ioe) {
             log.error(ioe.getMessage(), ioe);
@@ -102,7 +111,7 @@ public class SocketManager {
 
     public boolean isConnected() {
 
-        return socket.isConnected();
+        return isConnected;
     }
 
     public boolean isClosed() {

@@ -9,6 +9,7 @@ import ch.bmec.bmecscreen.service.configuration.ConfigurationService;
 import ch.bmec.bmecscreen.service.socket.SocketManager;
 import ch.bmec.bmecscreen.ui.SystemUiController;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashSet;
@@ -68,7 +69,7 @@ public class SocketRPiPushButtonServerThread implements RPiPushButtonServerThrea
 
             serverSocket = new ServerSocket(port);
             
-            uiController.setPushbuttonServerStatus(true, serverSocket.getInetAddress().getHostAddress(), port);
+            uiController.setPushbuttonServerStatus(true, InetAddress.getLocalHost().getHostAddress(), port);
 
             while (serverSocket.isClosed() == false) {
 
@@ -79,7 +80,7 @@ public class SocketRPiPushButtonServerThread implements RPiPushButtonServerThrea
                 log.trace("connection from " + clientSocket);
 
                 SocketManager socketManager = new SocketManager(clientSocket);
-
+                
                 RPiPushButtonClientConnection clientConnection = applicationContext.getBean(RPiPushButtonClientConnection.class, socketManager, this);
 
                 executorService.submit(clientConnection);

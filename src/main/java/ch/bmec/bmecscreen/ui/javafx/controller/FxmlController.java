@@ -89,34 +89,102 @@ public class FxmlController implements Initializable, SystemUiController {
 
     @FXML
     public void handleSystemPowerButton(ActionEvent event) {
+        systemPowerButton.setDisable(true);
+        loadingPane.setVisible(true);
+
         if (systemPowerButton.isSelected()) {
-            
-            loadingPane.setVisible(true);
-            Task<Void> startSystem = new Task<Void>() {
+            Task<Void> startSystemTask = new Task<Void>() {
 
                 @Override
                 protected Void call() throws Exception {
                     systemController.startupSystem();
-
                     return null;
                 }
             };
-            startSystem.addEventHandler(WorkerStateEvent.WORKER_STATE_SUCCEEDED, (WorkerStateEvent event2) -> {
+            startSystemTask.addEventHandler(WorkerStateEvent.WORKER_STATE_SUCCEEDED, (WorkerStateEvent event2) -> {
+                systemPowerButton.setDisable(false);
                 loadingPane.setVisible(false);
             });
-            new Thread(startSystem).start();
+            new Thread(startSystemTask).start();
+
+        } else {
+            Task<Void> stopSystemTask = new Task<Void>() {
+
+                @Override
+                protected Void call() throws Exception {
+                    systemController.shutdownSystem();
+                    return null;
+                }
+            };
+            stopSystemTask.addEventHandler(WorkerStateEvent.WORKER_STATE_SUCCEEDED, (WorkerStateEvent event2) -> {
+                systemPowerButton.setDisable(false);
+                loadingPane.setVisible(false);
+            });
+            new Thread(stopSystemTask).start();
         }
     }
 
     @FXML
     public void handleVncToggleButton(ActionEvent event) {
 
+        vncToggleButton.setDisable(true);
+        loadingPane.setVisible(true);
+
+        if (vncToggleButton.isSelected()) {
+            Task<Void> startVncClientTask = new Task<Void>() {
+
+                @Override
+                protected Void call() throws Exception {
+                    systemController.startVncOnRPi();
+                    return null;
+                }
+            };
+            startVncClientTask.addEventHandler(WorkerStateEvent.WORKER_STATE_SUCCEEDED, (WorkerStateEvent event2) -> {
+                vncToggleButton.setDisable(false);
+                loadingPane.setVisible(false);
+            });
+            new Thread(startVncClientTask).start();
+        } else {
+            Task<Void> stopSystemTask = new Task<Void>() {
+
+                @Override
+                protected Void call() throws Exception {
+                    systemController.stopVncOnRPi();
+                    return null;
+                }
+            };
+            stopSystemTask.addEventHandler(WorkerStateEvent.WORKER_STATE_SUCCEEDED, (WorkerStateEvent event2) -> {
+                vncToggleButton.setDisable(false);
+                loadingPane.setVisible(false);
+            });
+            new Thread(stopSystemTask).start();
+        }
     }
 
     @FXML
     public void handleRpiRebootButton(ActionEvent event) {
 
+        loadingPane.setVisible(true);
+        rpiRebootButton.setDisable(true);
+        
+        // systemController::rebootRpi;
+
+        Task<Void> rpiRebootTask = new Task<Void>() {
+
+            @Override
+            protected Void call() throws Exception {
+                systemController.rebootRPi();
+                return null;
+            }
+        };
+        rpiRebootTask.addEventHandler(WorkerStateEvent.WORKER_STATE_SUCCEEDED, (WorkerStateEvent event2) -> {
+            vncToggleButton.setDisable(false);
+            rpiRebootButton.setVisible(false);
+        });
+        new Thread(rpiRebootTask).start();
     }
+    
+    // private void executeTask(Button clickedButton, )
 
     @FXML
     public void handleEcosRefreshButton(ActionEvent event) {
@@ -134,9 +202,13 @@ public class FxmlController implements Initializable, SystemUiController {
             if (systemUp) {
                 systemPowerButton.setText("System ausschalten");
                 systemPowerButton.setSelected(true);
+                vncToggleButton.setDisable(false);
+                rpiRebootButton.setDisable(false);
             } else {
                 systemPowerButton.setText("System einschalten");
                 systemPowerButton.setSelected(false);
+                vncToggleButton.setDisable(true);
+                rpiRebootButton.setDisable(true);
             }
         });
     }
@@ -158,12 +230,8 @@ public class FxmlController implements Initializable, SystemUiController {
         Platform.runLater(() -> {
             if (rPiAlive) {
                 rpiStatus.setFill(Color.GREEN);
-                vncToggleButton.setDisable(false);
-                rpiRebootButton.setDisable(false);
             } else {
                 rpiStatus.setFill(Color.RED);
-                vncToggleButton.setDisable(true);
-                rpiRebootButton.setDisable(true);
             }
             rpiStatus.setVisible(true);
         });
@@ -202,4 +270,18 @@ public class FxmlController implements Initializable, SystemUiController {
             serverClientCount.setText(Integer.toString(clientCount));
         });
     }
+
+    @Override
+    public void setVncClientStatus(boolean vncClientStatus) {
+        Platform.runLater(() -> {
+            if (vncClientStatus) {
+                vncToggleButton.setText("VNC aus");
+                vncToggleButton.setSelected(true);
+            } else {
+                vncToggleButton.setText("VNC ein");
+                vncToggleButton.setSelected(false);
+            }
+        });
+    }
+
 }

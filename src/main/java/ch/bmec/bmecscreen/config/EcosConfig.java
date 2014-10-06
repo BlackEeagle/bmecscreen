@@ -15,6 +15,8 @@ public class EcosConfig extends TcpConfig {
 
     private String address;
 
+    private int waitTillShutdown;
+
     public EcosConfig() {
     }
 
@@ -32,6 +34,14 @@ public class EcosConfig extends TcpConfig {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public int getWaitTillShutdown() {
+        return waitTillShutdown;
+    }
+
+    public void setWaitTillShutdown(int waitTillShutdown) {
+        this.waitTillShutdown = waitTillShutdown;
     }
 
     @Override

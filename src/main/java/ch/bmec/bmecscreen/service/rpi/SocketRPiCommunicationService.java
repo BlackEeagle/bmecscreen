@@ -35,16 +35,13 @@ public class SocketRPiCommunicationService extends AbstractSocketCommunicationSe
 
     @Autowired
     private RPiPushButtonServerThread serverThread;
-    
+
     @Autowired
     private PushbuttonConfigurationService pushbuttonConfigurationService;
 
     @PreDestroy
     public void cleanup() {
-        if (executorService != null) {
-            executorService.shutdownNow();
-            serverThread.shutdownServerAndClients();
-        }
+        stopPushbuttonServerThread();
     }
 
     @Override
@@ -72,13 +69,19 @@ public class SocketRPiCommunicationService extends AbstractSocketCommunicationSe
     }
 
     @Override
+    public void disconnect() {
+        socketManager.disconnect();
+    }  
+    
+
+    @Override
     public boolean isAlive() {
 
         return sendAndReceive("BMECScreen1-alive-", "BMECScreen2-hello-");
     }
 
     @Override
-    public boolean activateVncDisplay() {
+    public boolean activateVncClient() {
 
         return sendAndReceive("BMECScreen1-status-on-", "BMECScreen2-status-ok-");
     }
@@ -109,9 +112,9 @@ public class SocketRPiCommunicationService extends AbstractSocketCommunicationSe
 
     @Override
     public boolean applyPushbottunConfiguration(PushbuttonConfiguration pushbuttonConfiguration) {
-        
+
         String message = pushbuttonConfigurationService.createMessageForRPi(pushbuttonConfiguration);
-        
+
         return sendAndReceive(message, "BMECScreen2-pushbuttonLight-ok-");
     }
 
@@ -128,6 +131,15 @@ public class SocketRPiCommunicationService extends AbstractSocketCommunicationSe
 
             executorService.submit(serverThread);
             serverThreadStarted = true;
+        }
+    }
+
+    @Override
+    public void stopPushbuttonServerThread() {
+        if (executorService != null) {
+            executorService.shutdownNow();
+            serverThread.shutdownServerAndClients();
+            serverThreadStarted = false;
         }
     }
 

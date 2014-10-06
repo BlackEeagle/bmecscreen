@@ -2,6 +2,7 @@ package ch.bmec.bmecscreen;
 
 import ch.bmec.bmecscreen.ui.javafx.SpringFxmlLoader;
 import ch.bmec.bmecscreen.config.SpringConfiguration;
+import ch.bmec.bmecscreen.controller.SystemController;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.application.Platform;
@@ -14,6 +15,8 @@ public class BmecScreenApp extends Application {
 
     private AnnotationConfigApplicationContext context;
 
+    private SystemController systemController;
+
     @Override
     public void start(Stage stage) throws Exception {
 
@@ -22,18 +25,21 @@ public class BmecScreenApp extends Application {
         context = new AnnotationConfigApplicationContext(SpringConfiguration.class);
         SpringFxmlLoader loader = new SpringFxmlLoader(context);
 
+        systemController = context.getBean(SystemController.class);
+
         Parent root = (Parent) loader.load("/fxml/Scene.fxml");
 
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");
 
-        stage.setTitle("JavaFX and Maven");
+        stage.setTitle("BMEC Screen Control Panel");
         stage.setScene(scene);
         stage.show();
     }
 
     @Override
     public void stop() throws Exception {
+        systemController.shutdownSystem();
         context.close();
     }
 

@@ -48,6 +48,11 @@ public class SocketEcosCommunicationService extends AbstractSocketCommunicationS
     }
 
     @Override
+    public void disconnect() {
+        socketManager.disconnect();
+    }
+
+    @Override
     public boolean turnSystemOn() {
         return modifySystemStatus(EcosSystemStatus.ON);
     }

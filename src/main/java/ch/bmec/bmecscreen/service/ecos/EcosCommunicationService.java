@@ -13,6 +13,8 @@ public interface EcosCommunicationService {
 
     public boolean checkConnection();
     
+    public void disconnect();
+    
     public boolean turnSystemOn();
     
     public boolean turnSystemOff();

@@ -19,6 +19,8 @@ public interface SystemUiController {
     
     public void setVncServerStatus(boolean vncServerStarted);
     
+    public void setVncClientStatus(boolean vncClientStatus);
+    
     public void setPushbuttonServerStatus(boolean serverStarted, String ipAddress, int port);
     
     public void setPushbuttonServerClientCount(int clientCount);

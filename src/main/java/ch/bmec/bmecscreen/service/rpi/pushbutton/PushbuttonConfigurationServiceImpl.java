@@ -30,7 +30,7 @@ public class PushbuttonConfigurationServiceImpl implements PushbuttonConfigurati
         PushbuttonConfiguration config = null;
 
         try {
-            Pattern pattern = Pattern.compile("BMECScreen2-pushbuttonPushed-((0|1){6})");
+            Pattern pattern = Pattern.compile("BMECScreen2-pushbuttonPushed-((0|1){6})-");
             Matcher matcher = pattern.matcher(message);
 
             if (matcher.matches()) {

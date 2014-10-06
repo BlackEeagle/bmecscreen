@@ -5,6 +5,7 @@ ecosConfig:
     timeout: 1000
     protocol: DCC
     address: 189
+    waitTillShutdown: 20
 rPiConfig:
     ip: 10.10.10.247
     tcpPort: 9999
@@ -13,10 +14,14 @@ rPiConfig:
 vncConfig:
     path: C:\Program Files\TightVNC\
     viewerResolution:
-        width: 1920
-        height: 1080
+        #width: 1920
+        #height: 1080
+        width: 800
+        height: 600
     serverResolution:
-        width: 2100
+        #width: 2100
+        #height: 1200
+        width: 1920
         height: 1200
     initTop: 50
     initLeft: 240

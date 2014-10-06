@@ -16,9 +16,9 @@
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="456.0" prefWidth="191.0">
                     <children>
-                        <Label layoutX="14.0" layoutY="14.0" minHeight="16" minWidth="69" text="ECoS Status" />
-                        <Circle fx:id="ecosStatus" layoutX="132.0" layoutY="23.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" visible="false" />
-                        <Button fx:id="ecosRefreshButton" layoutX="14.0" layoutY="44.0" mnemonicParsing="false" onAction="#handleEcosRefreshButton" text="aktualisieren" />
+                        <Label layoutX="14.0" layoutY="14.0" minHeight="16" minWidth="69" text="ECoS Verbindung" />
+                        <Circle fx:id="ecosStatus" fill="RED" layoutX="132.0" layoutY="23.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Button fx:id="ecosRefreshButton" disable="true" layoutX="14.0" layoutY="44.0" mnemonicParsing="false" onAction="#handleEcosRefreshButton" text="aktualisieren" />
                     </children>
                 </AnchorPane>
             </content>
@@ -27,9 +27,9 @@
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                     <children>
-                        <Label layoutX="14.0" layoutY="14.0" prefHeight="17.0" prefWidth="74.0" text="RPi Status" />
-                        <Button fx:id="rpiRefreshButton" layoutX="13.0" layoutY="44.0" mnemonicParsing="false" onAction="#handleRpiRefreshButton" text="aktualisieren" />
-                        <Circle fx:id="rpiStatus" layoutX="109.0" layoutY="23.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" visible="false" />
+                        <Label layoutX="14.0" layoutY="14.0" prefHeight="17.0" prefWidth="92.0" text="RPi Verbindung" />
+                        <Button fx:id="rpiRefreshButton" disable="true" layoutX="13.0" layoutY="44.0" mnemonicParsing="false" onAction="#handleRpiRefreshButton" text="aktualisieren" />
+                        <Circle fx:id="rpiStatus" fill="RED" layoutX="127.0" layoutY="23.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
                         <Label fx:id="outputLabel" layoutX="14.0" layoutY="296.0" prefHeight="17.0" prefWidth="122.0" />
                     </children>
                 </AnchorPane>
@@ -40,7 +40,7 @@
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="52.0" prefWidth="200.0">
                <children>
                   <Label layoutX="11.0" layoutY="17.0" text="Server Status" />
-                  <Circle fx:id="serverStatus" layoutX="110.0" layoutY="26.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" visible="false" />
+                  <Circle fx:id="serverStatus" fill="RED" layoutX="110.0" layoutY="26.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
                   <Label layoutX="11.0" layoutY="39.0" prefHeight="17.0" prefWidth="67.0" text="IP-Adresse:" />
                   <Label fx:id="serverIpAddress" alignment="CENTER_RIGHT" layoutX="100.0" layoutY="39.0" prefHeight="17.0" prefWidth="86.0" />
                   <Label fx:id="serverPort" alignment="CENTER_RIGHT" layoutX="100.0" layoutY="62.0" prefHeight="17.0" prefWidth="86.0" />
@@ -54,7 +54,7 @@
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <Circle fx:id="vncStatus" layoutX="131.0" layoutY="23.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" visible="false" />
+                  <Circle fx:id="vncStatus" fill="RED" layoutX="131.0" layoutY="23.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
                   <Label layoutX="14.0" layoutY="14.0" text="VNC Server Status" />
                </children></AnchorPane>
             </content>

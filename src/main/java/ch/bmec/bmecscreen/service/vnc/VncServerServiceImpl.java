@@ -10,6 +10,7 @@ import ch.bmec.bmecscreen.service.configuration.ConfigurationService;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.logging.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class VncServerServiceImpl implements VncServerService {
     public void startVncServer() {
 
         if (isVncServerRunning == false) {
-            executeCommands(getConfig().getPath() + "tvnserver.exe", "-run");
+            executeCommands(getPathToExecutable(), "-run");
             isVncServerRunning = true;
         }
     }
@@ -42,7 +43,7 @@ public class VncServerServiceImpl implements VncServerService {
     public void shutdownVncServer() {
 
         if (isVncServerRunning == true) {
-            executeCommands(getConfig().getPath() + "tvnserver.exe", "-controlapp", "-shutdown");
+            executeCommands(getPathToExecutable(), "-controlapp", "-shutdown");
             isVncServerRunning = false;
         }
     }
@@ -58,20 +59,22 @@ public class VncServerServiceImpl implements VncServerService {
             resAndTopLeft.append(getConfig().getViewerResolution().getHeight());
             resAndTopLeft.append("+").append(top).append("+").append(left);
 
-            executeCommands(getConfig().getPath() + "tvnserver.exe", "-controlapp", "sharerect", resAndTopLeft.toString());
+            executeCommands(getPathToExecutable(), "-controlapp", "-sharerect", resAndTopLeft.toString());
         }
     }
 
+    private String getPathToExecutable() {
+        return getConfig().getPath() + "tvnserver.exe";
+    }
+
     private void executeCommands(String... commands) {
+        
         ProcessBuilder processBuilder = new ProcessBuilder(commands);
-        //processBuilder.directory(new File(getConfig().getPath()));
-
-        try {
-            log.trace("execute " + Arrays.asList(commands).toString() + " in " + getConfig().getPath());
-            Process process = processBuilder.start();
-            process.waitFor();
-
-        } catch (IOException | InterruptedException ex) {
+        
+        try {            
+            log.trace("execute " + Arrays.asList(commands).toString());
+            processBuilder.start();
+        } catch (IOException ex) {
             log.error(ex.getMessage(), ex);
         }
     }

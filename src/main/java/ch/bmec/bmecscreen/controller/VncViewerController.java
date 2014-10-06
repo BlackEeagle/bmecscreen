@@ -15,4 +15,7 @@ public interface VncViewerController {
     
     public PushbuttonConfiguration handlePush(PushbuttonConfiguration pushedConfiguration);
     
+    public void reset();
+    
+    public PushbuttonConfiguration currentPushConfig();
 }

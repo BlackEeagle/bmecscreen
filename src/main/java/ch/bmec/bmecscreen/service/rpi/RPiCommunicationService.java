@@ -15,9 +15,11 @@ public interface RPiCommunicationService {
     
     public boolean checkConnection();
     
+    public void disconnect();
+    
     public boolean isAlive();
     
-    public boolean activateVncDisplay();
+    public boolean activateVncClient();
     
     public boolean deactivateVncDisplay();
     
@@ -32,5 +34,7 @@ public interface RPiCommunicationService {
     public boolean configureTv(TvCommand command);
     
     public void startPushbuttonServerThread();
+    
+    public void stopPushbuttonServerThread();
     
 }
