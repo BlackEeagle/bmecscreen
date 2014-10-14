@@ -57,8 +57,8 @@ public class VncServerServiceImpl implements VncServerService {
             resAndTopLeft.append(getConfig().getViewerResolution().getWidth());
             resAndTopLeft.append("x");
             resAndTopLeft.append(getConfig().getViewerResolution().getHeight());
-            resAndTopLeft.append("+").append(top);
             resAndTopLeft.append("+").append(left);
+            resAndTopLeft.append("+").append(top);
 
             // workaround for refresh bug
             executeCommands(getPathToExecutable(), "-controlapp", "-sharerect", "0x0+0+0");

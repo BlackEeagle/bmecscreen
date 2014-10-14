@@ -3,6 +3,7 @@ package ch.bmec.bmecscreen;
 import ch.bmec.bmecscreen.ui.javafx.SpringFxmlLoader;
 import ch.bmec.bmecscreen.config.SpringConfiguration;
 import ch.bmec.bmecscreen.controller.SystemController;
+import java.io.File;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.application.Platform;
@@ -19,7 +20,7 @@ public class BmecScreenApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-
+        
         Platform.setImplicitExit(true);
 
         context = new AnnotationConfigApplicationContext(SpringConfiguration.class);
@@ -52,7 +53,12 @@ public class BmecScreenApp extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        System.setProperty("log.baseDir", getExecutionDir());
         launch(args);
+    }
+
+    private static String getExecutionDir() {
+        return new File(BmecScreenApp.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getParent();
     }
 
 }

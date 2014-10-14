@@ -23,7 +23,7 @@ vncConfig:
         #height: 1200
         width: 1920
         height: 1200
-    initTop: 50
-    initLeft: 240
+    initTop: 0
+    initLeft: 0
     stepSize: 50
 ...

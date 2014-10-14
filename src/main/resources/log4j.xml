@@ -8,14 +8,25 @@
             <param name="ConversionPattern" value="%d{ISO8601} %-5p [%c{1}] - %m%n" />
         </layout>
     </appender>
+    
+    <appender name="default.file" class="org.apache.log4j.RollingFileAppender">
+        <param name="file" value="${log.baseDir}/log/screen.log" />
+        <param name="maxFileSize" value="2MB" />
+        <param name="maxBackupIndex" value="5" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{ISO8601} %-5p [%c{1}] - %m%n" />
+        </layout>
+    </appender>
 
     <logger name="ch.bmec.bmecscreen" additivity="false">
         <level value="TRACE" />
         <appender-ref ref="default.console" />
+        <appender-ref ref="default.file" />
     </logger>
 
     <root>
-        <priority value="info" />
+        <priority value="INFO" />
         <appender-ref ref="default.console" />
+        <appender-ref ref="default.file" />
     </root>
 </log4j:configuration>
