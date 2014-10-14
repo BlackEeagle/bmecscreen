@@ -5,10 +5,14 @@
  */
 package ch.bmec.bmecscreen.service.rpi;
 
+import ch.bmec.bmecscreen.service.rpi.tvcommand.TvCommandType;
 import ch.bmec.bmecscreen.service.rpi.pushbutton.PushbuttonConfiguration;
 import ch.bmec.bmecscreen.config.RPiConfig;
 import ch.bmec.bmecscreen.service.rpi.pushbutton.PushbuttonConfigurationService;
 import ch.bmec.bmecscreen.service.rpi.server.RPiPushButtonServerThread;
+import ch.bmec.bmecscreen.service.rpi.tvcommand.SimpleTvCommand;
+import ch.bmec.bmecscreen.service.rpi.tvcommand.TvCommand;
+import ch.bmec.bmecscreen.service.rpi.tvcommand.TvCommandVisitor;
 import ch.bmec.bmecscreen.service.socket.AbstractSocketCommunicationService;
 import ch.bmec.bmecscreen.service.socket.SocketManager;
 import java.io.IOException;
@@ -25,7 +29,7 @@ import org.springframework.stereotype.Component;
  * @author Thom
  */
 @Component
-public class SocketRPiCommunicationService extends AbstractSocketCommunicationService implements RPiCommunicationService {
+public class SocketRPiCommunicationService extends AbstractSocketCommunicationService implements RPiCommunicationService, TvCommandVisitor {
 
     private final Logger log = LoggerFactory.getLogger(SocketRPiCommunicationService.class);
 
@@ -120,7 +124,13 @@ public class SocketRPiCommunicationService extends AbstractSocketCommunicationSe
 
     @Override
     public boolean configureTv(TvCommand command) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        StringBuilder tvCommand = new StringBuilder();
+        tvCommand.append("BMECScreen1-tv-");
+        tvCommand.append(command.acceptTvCommandPart(this));
+        tvCommand.append("-");
+        
+        return sendAndReceive(tvCommand.toString(), "BMECScreen2-tv-ok-");
     }
 
     @Override
@@ -165,5 +175,10 @@ public class SocketRPiCommunicationService extends AbstractSocketCommunicationSe
         }
 
         return success;
+    }
+    
+    @Override
+    public String getTvCommandPart(SimpleTvCommand simpleTvCommand) {
+        return simpleTvCommand.getCommand();
     }
 }

@@ -6,6 +6,7 @@
 package ch.bmec.bmecscreen.service.rpi;
 
 import ch.bmec.bmecscreen.service.rpi.pushbutton.PushbuttonConfiguration;
+import ch.bmec.bmecscreen.service.rpi.tvcommand.TvCommand;
 
 /**
  *

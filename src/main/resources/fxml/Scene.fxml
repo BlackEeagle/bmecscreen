@@ -10,7 +10,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="359.0" prefWidth="905.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.bmec.bmecscreen.ui.javafx.controller.FxmlController">
+<AnchorPane id="AnchorPane" prefHeight="359.0" prefWidth="1129.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.bmec.bmecscreen.ui.javafx.controller.FxmlController">
     <children>
         <TitledPane animated="false" collapsible="false" layoutX="25.0" layoutY="136.0" prefHeight="200.0" prefWidth="193.0" text="ECoS">
             <content>
@@ -59,6 +59,21 @@
                </children></AnchorPane>
             </content>
         </TitledPane>
+      <TitledPane animated="false" collapsible="false" layoutX="898.0" layoutY="136.0" prefHeight="200.0" prefWidth="202.0" text="TV">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="tvOnButton" disable="true" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleTvOnButton" text="Ein" />
+                  <Button fx:id="tvOffButton" disable="true" layoutX="100.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleTvOffButton" text="Aus" />
+                  <Button fx:id="tvVolumeUpButton" disable="true" layoutX="14.0" layoutY="54.0" mnemonicParsing="false" onAction="#handleTvVolumeUpButton" text="Lauter" />
+                  <Button fx:id="tvVolumeDownButton" disable="true" layoutX="100.0" layoutY="54.0" mnemonicParsing="false" onAction="#handleTvVolumeDownButton" text="Leiser" />
+                  <Button fx:id="tvPictureDynamicButton" disable="true" layoutX="14.0" layoutY="91.0" mnemonicParsing="false" onAction="#handleTvPictureDynamicButton" text="dynamisch" />
+                  <Button fx:id="tvPictureStandardButton" disable="true" layoutX="100.0" layoutY="91.0" mnemonicParsing="false" onAction="#handleTvPictureStandardButton" text="standard" />
+                  <Button fx:id="tvPictureMovieButton" disable="true" layoutX="15.0" layoutY="130.0" mnemonicParsing="false" onAction="#handleTvPictureMovieButton" text="movie" />
+               </children>
+            </AnchorPane>
+        </content>
+      </TitledPane>
       <AnchorPane layoutX="26.0" layoutY="50.0" prefHeight="78.0" prefWidth="857.0">
          <children>
             <ToggleButton fx:id="systemPowerButton" layoutX="21.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleSystemPowerButton" pickOnBounds="false" prefHeight="44.0" prefWidth="144.0" text="System einschalten">
@@ -75,9 +90,9 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <AnchorPane fx:id="loadingPane" opacity="0.65" prefHeight="359.0" prefWidth="905.0" style="-fx-background-color: #DDDDDD;" visible="false">
+      <AnchorPane fx:id="loadingPane" opacity="0.65" prefHeight="359.0" prefWidth="1129.0" style="-fx-background-color: #DDDDDD;" visible="false">
          <children>
-            <ProgressIndicator layoutX="341.0" layoutY="66.0" prefHeight="227.0" prefWidth="223.0" />
+            <ProgressIndicator layoutX="453.0" layoutY="66.0" prefHeight="227.0" prefWidth="223.0" />
          </children>
       </AnchorPane>
         <!--<fx:include source="/fxml/RPiPane.fxml" />-->

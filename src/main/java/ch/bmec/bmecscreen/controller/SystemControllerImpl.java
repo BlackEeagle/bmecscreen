@@ -60,7 +60,7 @@ public class SystemControllerImpl implements SystemController {
     private boolean vncRPIStarted;
 
     @Override
-    public void initializeSystem() {
+    public Void initializeSystem() {
 
         checkEcosConnection();
 
@@ -80,10 +80,11 @@ public class SystemControllerImpl implements SystemController {
         uiController.setRPiStatus(isRPiAlive);
 
         uiController.setSystemStatus(isRPiAlive && pushbuttonServerThreadStarted && vncServerStarted);
+        return null;
     }
 
     @Override
-    public void startupSystem() {
+    public Void startupSystem() {
 
         if (hasEcosConnection == false) {
             checkEcosConnection();
@@ -116,10 +117,11 @@ public class SystemControllerImpl implements SystemController {
         }
 
         uiController.setSystemStatus(isRPiAlive && pushbuttonServerThreadStarted && vncServerStarted);
+        return null;
     }
 
     @Override
-    public void shutdownSystem() {
+    public Void shutdownSystem() {
 
         if (vncServerStarted) {
             vncServerService.shutdownVncServer();
@@ -163,10 +165,11 @@ public class SystemControllerImpl implements SystemController {
         uiController.setEcosConnection(hasEcosConnection);
 
         uiController.setSystemStatus(isRPiAlive && pushbuttonServerThreadStarted && vncServerStarted);
+        return null;
     }
 
     @Override
-    public void startVncOnRPi() {
+    public Void startVncOnRPi() {
 
         if (vncRPIStarted == false && isRPiAlive && vncServerStarted) {
             vncRPIStarted = rPiCommunicationService.activateVncClient();
@@ -178,11 +181,11 @@ public class SystemControllerImpl implements SystemController {
         }
 
         uiController.setVncClientStatus(vncRPIStarted);
-
+        return null;
     }
 
     @Override
-    public void stopVncOnRPi() {
+    public Void stopVncOnRPi() {
 
         if (vncRPIStarted && isRPiAlive) {
             vncRPIStarted = !rPiCommunicationService.deactivateVncDisplay();
@@ -194,10 +197,11 @@ public class SystemControllerImpl implements SystemController {
         }
 
         uiController.setVncClientStatus(vncRPIStarted);
+        return null;
     }
 
     @Override
-    public void rebootRPi() {
+    public Void rebootRPi() {
 
         stopVncOnRPi();
 
@@ -213,6 +217,7 @@ public class SystemControllerImpl implements SystemController {
         uiController.setRPiStatus(hasRPiConnection);
         
         checkIfRPiIsAlive();
+        return null;
     }
 
     private void checkIfRPiIsAlive() {

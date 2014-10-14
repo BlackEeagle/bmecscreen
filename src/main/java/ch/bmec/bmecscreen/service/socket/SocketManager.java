@@ -56,16 +56,13 @@ public class SocketManager {
     public void connect() throws IOException {
 
         if (alreadyConnected) {
-            if (socket.isClosed() == false) {
-                socket.close();
-            }
-            
+            disconnect();            
             socket = new Socket();
         }
 
         alreadyConnected = true;
-        isConnected = true;
         socket.connect(new InetSocketAddress(ipAddress, port), timeout);
+        isConnected = true;
     }
 
     public void disconnect() {

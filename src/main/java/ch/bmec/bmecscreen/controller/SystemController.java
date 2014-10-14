@@ -11,15 +11,15 @@ package ch.bmec.bmecscreen.controller;
  */
 public interface SystemController {
     
-    public void initializeSystem();
+    public Void initializeSystem();
     
-    public void startupSystem();
+    public Void startupSystem();
     
-    public void shutdownSystem();
+    public Void shutdownSystem();
     
-    public void startVncOnRPi();
+    public Void startVncOnRPi();
     
-    public void stopVncOnRPi();
+    public Void stopVncOnRPi();
     
-    public void rebootRPi();
+    public Void rebootRPi();
 }
