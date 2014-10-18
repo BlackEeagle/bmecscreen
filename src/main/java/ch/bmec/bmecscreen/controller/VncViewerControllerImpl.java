@@ -70,17 +70,21 @@ public class VncViewerControllerImpl implements VncViewerController {
         int initLeft = getConfig().getInitLeft();
 
         // screen 2 always disabled (for now)
-        PushbuttonConfiguration newConfig = new PushbuttonConfiguration(true, false, true, true, true, true);
+        PushbuttonConfiguration newConfig = new PushbuttonConfiguration(false, false, true, true, true, true);
         // check top
         if (currentTop == initTop) {
             newConfig.setUp(false);
-        } else if (currentTop == initTop + maxHeight - viewHeight) {
+        } 
+        // check down
+        if (currentTop == initTop + maxHeight - viewHeight) {
             newConfig.setDown(false);
         }
         // check left
         if (currentLeft == initLeft) {
             newConfig.setLeft(false);
-        } else if (currentLeft == initLeft + maxWidth - viewWidth) {
+        } 
+        // check right
+        if (currentLeft == initLeft + maxWidth - viewWidth) {
             newConfig.setRight(false);
         }
         return newConfig;

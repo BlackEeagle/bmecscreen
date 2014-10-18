@@ -1,13 +1,13 @@
 ---
 ecosConfig: 
-    ip: 10.10.10.249
+    ip: 192.168.13.21
     tcpPort: 15471
     timeout: 1000
     protocol: DCC
-    address: 189
+    address: 196
     waitTillShutdown: 20
 rPiConfig:
-    ip: 10.10.10.247
+    ip: 192.168.13.22
     tcpPort: 9999
     timeout: 1000
     serverPort: 9998
@@ -16,13 +16,13 @@ vncConfig:
     viewerResolution:
         #width: 1920
         #height: 1080
-        width: 800
-        height: 600
+        width: 1280
+        height: 1024
     serverResolution:
-        #width: 2100
-        #height: 1200
         width: 1920
-        height: 1200
+        height: 1080
+        #width: 2560
+        #height: 1413
     initTop: 0
     initLeft: 0
     stepSize: 50

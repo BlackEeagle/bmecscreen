@@ -133,20 +133,18 @@ public class SystemControllerImpl implements SystemController {
             rPiCommunicationService.stopPushbuttonServerThread();
             pushbuttonServerThreadStarted = false;
         }
-        
-        if(vncRPIStarted) {
+
+        if (vncRPIStarted) {
             stopVncOnRPi();
         }
 
         if (hasRPiConnection) {
-            /*
-             boolean shutdown = rPiCommunicationService.shutdown();
-             if (shutdown) {
-             rPiCommunicationService.disconnect();
-             hasRPiConnection = false;
-             isRPiAlive = false;
-             }
-             */
+            boolean shutdown = rPiCommunicationService.shutdown();
+            if (shutdown) {
+                rPiCommunicationService.disconnect();
+                hasRPiConnection = false;
+                isRPiAlive = false;
+            }
         }
         uiController.setRPiStatus(hasRPiConnection);
 
@@ -215,13 +213,15 @@ public class SystemControllerImpl implements SystemController {
             }
         }
         uiController.setRPiStatus(hasRPiConnection);
-        
+
         checkIfRPiIsAlive();
         return null;
     }
 
     private void checkIfRPiIsAlive() {
         if (rPiPowerOn) {
+            int tries = 0;
+            
             do {
 
                 if (hasRPiConnection == false || isRPiAlive == false) {
@@ -233,15 +233,16 @@ public class SystemControllerImpl implements SystemController {
                 }
 
                 if (isRPiAlive == false) {
-                    // give 500 millis to wake up and try again...
+                    // give 1 sec to wake up and try again...
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(1_000);
                     } catch (InterruptedException ex) {
                         log.error(ex.getMessage(), ex);
                     }
+                    tries++;
                 }
 
-            } while (!isRPiAlive);
+            } while (!isRPiAlive&& tries < 30);
         }
         uiController.setRPiStatus(isRPiAlive);
     }

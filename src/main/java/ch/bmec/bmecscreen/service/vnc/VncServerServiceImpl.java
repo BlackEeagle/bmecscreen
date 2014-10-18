@@ -60,16 +60,25 @@ public class VncServerServiceImpl implements VncServerService {
             resAndTopLeft.append("+").append(left);
             resAndTopLeft.append("+").append(top);
 
-            // workaround for refresh bug
-            executeCommands(getPathToExecutable(), "-controlapp", "-sharerect", "0x0+0+0");
-            
-            try {
-                Thread.sleep(400);
-            } catch (InterruptedException ex) {
-                // nothing
+            // execute whole thing 2 times cuz of vnc bug
+            for (int i = 0; i < 2; i++) {
+                // workaround for refresh bug
+                executeCommands(getPathToExecutable(), "-controlapp", "-sharerect", "0x0+0+0");
+
+                try {
+                    Thread.sleep(400);
+                } catch (InterruptedException ex) {
+                    // nothing
+                }
+
+                executeCommands(getPathToExecutable(), "-controlapp", "-sharerect", resAndTopLeft.toString());
+
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException ex) {
+                    // nothing
+                }
             }
-            
-            executeCommands(getPathToExecutable(), "-controlapp", "-sharerect", resAndTopLeft.toString());
         }
     }
 
@@ -78,10 +87,10 @@ public class VncServerServiceImpl implements VncServerService {
     }
 
     private void executeCommands(String... commands) {
-        
+
         ProcessBuilder processBuilder = new ProcessBuilder(commands);
-        
-        try {            
+
+        try {
             log.trace("execute " + Arrays.asList(commands).toString());
             processBuilder.start();
         } catch (IOException ex) {

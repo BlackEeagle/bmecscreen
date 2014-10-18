@@ -34,6 +34,7 @@ public class BmecScreenApp extends Application {
         scene.getStylesheets().add("/styles/Styles.css");
 
         stage.setTitle("BMEC Screen Control Panel");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }

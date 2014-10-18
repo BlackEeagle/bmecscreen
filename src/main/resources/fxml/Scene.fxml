@@ -90,7 +90,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <AnchorPane fx:id="loadingPane" opacity="0.65" prefHeight="359.0" prefWidth="1129.0" style="-fx-background-color: #DDDDDD;" visible="false">
+      <AnchorPane fx:id="loadingPane" opacity="0.65" prefHeight="359.0" prefWidth="1129.0" style="-fx-background-color: #DDDDDD;">
          <children>
             <ProgressIndicator layoutX="453.0" layoutY="66.0" prefHeight="227.0" prefWidth="223.0" />
          </children>
